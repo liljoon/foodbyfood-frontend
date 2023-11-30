@@ -1,17 +1,15 @@
 import { useState } from "react";
-import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Container, Form } from "react-bootstrap";
+import { signUp } from "../api/UserApi";
 
-import { signIn } from "./api/UserApi";
-
-export default function LoginComponent() {
+export function SignUpComponent() {
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [cookies, setCookie, removeCookie] = useCookies();
+    //const [cookies, setCookie, removeCookie] = useCookies();
     const navigate = useNavigate();
 
     function handleUsernameChange(event) {
@@ -25,19 +23,20 @@ export default function LoginComponent() {
 
     function handleSubmit(event) {
         event.preventDefault();
-        signIn(username, password)
+        signUp(username, password)
         .then(response => {
-            console.log(response);
-            navigate("/home");
+            alert("생성 완료!");
+            navigate("/");
         })
         .catch(response => {
-            alert("인증 오류!");
+            alert("중복");
         })
     }
 
     return (
         <Container className="Login">
-			<Form className="LoginForm">
+            <h2 className="text-center mb-4">회원가입</h2>
+			<Form className="signUpForm">
 				<Form.Group className="mb-3" controlId="formBasicUsername">
                     <Form.Label>ID</Form.Label>
                     <Form.Control type="text" placeholder="Enter ID" onChange={handleUsernameChange}/>
@@ -47,9 +46,8 @@ export default function LoginComponent() {
                     <Form.Label>Password</Form.Label>
                     <Form.Control type="password" placeholder="Password" onChange={handlePasswordChange}/>
                 </Form.Group>
-                <Button as="a" variant="secondary" className="mx-2" href="/signup" >Sign Up</Button>
                 <Button variant="primary" type="submit" onClick={handleSubmit}>
-                    Sign In
+                    Sign Up
                 </Button>
 
 			</Form>

@@ -6,3 +6,10 @@ export function signIn(username, password) {
         "password" : password
     });
 }
+
+export function signUp(username, password) {
+    return apiClient.post(`/user/signup`, {
+        "username" : username,
+        "password" : password
+    });
+}

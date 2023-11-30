@@ -1,16 +1,18 @@
 import { BrowserRouter, Routes ,Route } from "react-router-dom";
-import LoginComponent from "./LoginComponent";
+import SignInComponent from "./user/SignInComponent";
 import HomeComponent from "./HomeComponent";
 import UploadComponent from "./UploadComponent";
 import ReviewsComponent from "./ReviewsComponent";
 import RestaurantComponent from "./RestaurantComponent";
+import { SignUpComponent } from "./user/SignUpComponent";
 
 export default function FoodbyfoodComponent() {
     return (
         <div>
             <BrowserRouter>
                 <Routes>
-                    <Route path="/" element={<LoginComponent />} />
+                    <Route path="" element={<SignInComponent />} />
+                    <Route path="/signup" element={<SignUpComponent />} />
                     <Route path="/home" element={<HomeComponent/>} />
                     <Route path="/upload" element={<UploadComponent/>} />
                     <Route path="/reviews" element={<ReviewsComponent/>} />
