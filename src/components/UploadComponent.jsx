@@ -1,8 +1,8 @@
-import {useEffect, useState} from "react";
+import { useState} from "react";
 import { useNavigate } from "react-router-dom"
 import {Button, Form, Spinner, Table} from "react-bootstrap";
 import {foodRecognition} from "./api/FoodAiApi";
-import {render} from "@testing-library/react";
+import {uploadReview} from "./api/ReviewApi";
 
 export default function UploadComponent() {
 
@@ -101,11 +101,17 @@ export default function UploadComponent() {
         }
 
         function handleSubmit() {
-            console.log(reviews);
-            console.log(overall);
 
-            // alert("업로드 성공!");
-            // navigate('/home');
+            overall['detailReviews'] = reviews;
+            console.log(overall);
+            uploadReview(overall)
+                .then(response => {
+                    alert("업로드 성공!");
+                    navigate('/home');
+                })
+                .catch(err => {
+                    alert(err);
+                })
         }
 
         if (flag) {
