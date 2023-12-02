@@ -13,3 +13,7 @@ export function signUp(username, password) {
         "password" : password
     });
 }
+
+export function logout() {
+    return apiClient.get(`/user/logout`);
+}
