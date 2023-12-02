@@ -4,6 +4,8 @@ import {Button, Form, Spinner, Table} from "react-bootstrap";
 import {foodRecognition} from "./api/FoodAiApi";
 import {uploadReview} from "./api/ReviewApi";
 
+
+
 export default function UploadComponent() {
 
     const [flag, setFlag] = useState(false);
@@ -20,6 +22,13 @@ export default function UploadComponent() {
         ) : null;
     }
 
+    function getBase64(file) {
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function () {
+            setImageUrl(reader.result);
+        };
+    }
     function handleSubmit(e) {
         e.preventDefault();
         const form = e.target;
@@ -32,7 +41,7 @@ export default function UploadComponent() {
                 setIsLoading(false);
                 setFlag(true);
                 setFoodNames(response.data);
-                setImageUrl(URL.createObjectURL(data.food_image));
+                getBase64(data.food_image);
             })
     }
 
@@ -103,6 +112,7 @@ export default function UploadComponent() {
         function handleSubmit() {
 
             overall['detailReviews'] = reviews;
+            overall['imageB64'] = imageUrl;
             console.log(overall);
             uploadReview(overall)
                 .then(response => {
