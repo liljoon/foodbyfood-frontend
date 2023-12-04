@@ -4,8 +4,6 @@ import {retrieveReviewsByRestaurantName} from "../api/ReviewApi";
 import {Col, Container, Image, ListGroup, Row, Table} from "react-bootstrap";
 
 export default function SearchRestaurantNameComponent() {
-
-    const [searchParams] = useSearchParams();
     let query = "";
     const [reviews , setReviews] = useState([]);
     const [overallReview, setOverallReview] = useState({
@@ -40,15 +38,19 @@ export default function SearchRestaurantNameComponent() {
                   <Col>{ overallReview.restaurantName }</Col>
                   <Col>{ overallReview.scoreAverage }</Col>
               </Row>
+              <ListGroup>
               {
                   overallReview['foodScores'].map((food, index) => (
-                        <Row className="mb-1">
-                            <Col>{food.foodName}</Col>
-                            <Col>{food.foodScoreAverage}</Col>
-                        </Row>
+                        <ListGroup.Item key={index}>
+                            <Row >
+                                <Col>{food.foodName}</Col>
+                                <Col>{food.foodScoreAverage}</Col>
+                            </Row>
+                        </ListGroup.Item>
                     )
                   )
               }
+              </ListGroup>
               {
                   reviews.map((review, index) => (
                       <Container key={index} className="my-5">
