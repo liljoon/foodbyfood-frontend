@@ -53,11 +53,11 @@ export default function SearchRestaurantNameComponent() {
                   reviews.map((review, index) => (
                       <Container key={index} className="my-5">
                           <Row className="mb-2">
-                              <Image src={review.imageB64} thumbnail />
                               <Col>{ review.username }</Col>
                               <Col>{ review.score }</Col>
                               <Col>{ review.context }</Col>
                           </Row>
+                          <Image src={review.imageB64} thumbnail fluid style={{width:"300px"}} />
                           <Row>
                               <ListGroup>
                               {
