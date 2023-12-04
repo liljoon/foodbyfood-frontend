@@ -1,10 +1,10 @@
 import './App.css';
-import FoodbyfoodComponent from './components/FoodbyfoodComponent';
+import FoodByFoodComponent from './components/FoodByFoodComponent';
 
 function App() {
   return (
     <div className="App">
-        <FoodbyfoodComponent />
+        <FoodByFoodComponent />
     </div>
   );
 }

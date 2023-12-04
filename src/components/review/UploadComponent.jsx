@@ -1,8 +1,8 @@
 import { useState} from "react";
 import { useNavigate } from "react-router-dom"
 import {Button, Form, Spinner, Table} from "react-bootstrap";
-import {foodRecognition} from "./api/FoodAiApi";
-import {uploadReview} from "./api/ReviewApi";
+import {foodRecognition} from "../api/FoodAiApi";
+import {uploadReview} from "../api/ReviewApi";
 
 
 

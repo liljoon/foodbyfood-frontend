@@ -1,12 +1,12 @@
 import { BrowserRouter, Routes ,Route } from "react-router-dom";
 import SignInComponent from "./user/SignInComponent";
 import HomeComponent from "./HomeComponent";
-import UploadComponent from "./UploadComponent";
-import ReviewsComponent from "./ReviewsComponent";
+import UploadComponent from "./review/UploadComponent";
+import ReviewsComponent from "./review/ReviewsComponent";
 import RestaurantComponent from "./RestaurantComponent";
 import { SignUpComponent } from "./user/SignUpComponent";
 
-export default function FoodbyfoodComponent() {
+export default function FoodByFoodComponent() {
     return (
         <div>
             <BrowserRouter>
