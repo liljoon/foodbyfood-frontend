@@ -7,6 +7,7 @@ import {uploadReview} from "../api/ReviewApi";
 
 
 export default function UploadComponent() {
+    const imageSize = 500;
 
     const [flag, setFlag] = useState(false);
     const [imageUrl, setImageUrl] = useState("");
@@ -128,12 +129,16 @@ export default function UploadComponent() {
             canvas.lineWidth = 2;
             foodData.map(foodData => {
                 const coors = foodData['coordinate'];
-                const x = coors[0] / width * 300;
-                const y = coors[1] / height * 300;
-                const x2 = coors[2] / width * 300;
-                const y2 = coors[3] / height * 300;
+                const x = coors[0] / width * imageSize;
+                const y = coors[1] / height * imageSize;
+                const x2 = coors[2] / width * imageSize;
+                const y2 = coors[3] / height * imageSize;
 
                 canvas.strokeRect(x, y, x2-x, y2-y);
+
+                canvas.font = "20px serif";
+                canvas.fillStyle = "red";
+                canvas.fillText(foodData['foodName'], x, y - 5);
             })
         }
 
@@ -144,7 +149,7 @@ export default function UploadComponent() {
                 const image = new Image();
                 image.src = imageUrl;
                 image.onload = function () {
-                    canvas.drawImage(image, 0, 0, 300, 300);
+                    canvas.drawImage(image, 0, 0, imageSize, imageSize);
                     drawBoxes(canvas, image.width, image.height);
                 }
             }
@@ -155,8 +160,8 @@ export default function UploadComponent() {
             return (
             <>
                 <div>
-                    {/*<img src={imageUrl} width={300} height={300} className="m-3"/>*/}
-                    <canvas ref={canvasRef} width={300} height={300} />
+                    {/*<img src={imageUrl} width={imageSize} height={imageSize} className="m-3"/>*/}
+                    <canvas ref={canvasRef} width={imageSize} height={imageSize} />
                 </div>
                 <Form>
                     <Table striped bordered hover variant="dark">
