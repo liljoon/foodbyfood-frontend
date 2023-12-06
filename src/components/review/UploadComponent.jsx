@@ -1,4 +1,4 @@
-import { useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import { useNavigate } from "react-router-dom"
 import {Button, Form, Spinner, Table} from "react-bootstrap";
 import {foodRecognition} from "../api/FoodAiApi";
@@ -10,7 +10,7 @@ export default function UploadComponent() {
 
     const [flag, setFlag] = useState(false);
     const [imageUrl, setImageUrl] = useState("");
-    const [foodNames, setFoodNames] = useState([]);
+    const [foodData, setFoodData] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
@@ -40,7 +40,7 @@ export default function UploadComponent() {
             .then(response => {
                 setIsLoading(false);
                 setFlag(true);
-                setFoodNames(response.data);
+                setFoodData(response.data);
                 getBase64(data.food_image);
             })
     }
@@ -66,10 +66,10 @@ export default function UploadComponent() {
 
     function UploadReview() {
         const [reviews, setReviews] = useState(() => {
-            let initReviews = new Array(foodNames.length);
+            let initReviews = new Array(foodData.length);
             for (let i=0;i<initReviews.length;i++) {
                 initReviews[i]= {
-                    "foodName" : foodNames[i]['foodName'],
+                    "foodName" : foodData[i]['foodName'],
                     "score" : 3,
                     "context" : ""
                 }
@@ -110,7 +110,6 @@ export default function UploadComponent() {
         }
 
         function handleSubmit() {
-
             overall['detailReviews'] = reviews;
             overall['imageB64'] = imageUrl;
             console.log(overall);
@@ -124,17 +123,46 @@ export default function UploadComponent() {
                 })
         }
 
+        function drawBoxes(canvas, width, height) {
+            canvas.strokeStyle= "red";
+            canvas.lineWidth = 2;
+            foodData.map(foodData => {
+                const coors = foodData['coordinate'];
+                const x = coors[0] / width * 300;
+                const y = coors[1] / height * 300;
+                const x2 = coors[2] / width * 300;
+                const y2 = coors[3] / height * 300;
+
+                canvas.strokeRect(x, y, x2-x, y2-y);
+            })
+        }
+
+        const canvasRef = useRef(null);
+        useEffect(() => {
+            if (flag) {
+                const canvas = canvasRef.current.getContext("2d");
+                const image = new Image();
+                image.src = imageUrl;
+                image.onload = function () {
+                    canvas.drawImage(image, 0, 0, 300, 300);
+                    drawBoxes(canvas, image.width, image.height);
+                }
+            }
+        }, [canvasRef]);
+
+
         if (flag) {
             return (
             <>
                 <div>
-                    <img src={imageUrl} width={300} height={300} className="m-3"/>
+                    {/*<img src={imageUrl} width={300} height={300} className="m-3"/>*/}
+                    <canvas ref={canvasRef} width={300} height={300} />
                 </div>
                 <Form>
                     <Table striped bordered hover variant="dark">
                         <tbody>
-                            <tr >
-                                <td >
+                            <tr>
+                                <td>
                                     <Form.Group>
                                         <Form.Label>음식점 이름</Form.Label>
                                         <Form.Control id="restaurantId" type="text" onChange={handleOverall}/>
@@ -154,7 +182,7 @@ export default function UploadComponent() {
                                 </td>
                             </tr>
                             {
-                                foodNames.map(
+                                foodData.map(
                                     (foodData, index) => (
                                         <tr>
                                             <td>
