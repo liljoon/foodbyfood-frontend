@@ -72,7 +72,8 @@ export default function UploadComponent() {
                 initReviews[i]= {
                     "foodName" : foodData[i]['foodName'],
                     "score" : 3,
-                    "context" : ""
+                    "context" : "",
+                    "coordinate" : foodData[i]['coordinate']
                 }
             }
             return initReviews;

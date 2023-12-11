@@ -59,7 +59,7 @@ export default function SearchRestaurantNameComponent() {
                               <Col>{ review.score }</Col>
                               <Col>{ review.context }</Col>
                           </Row>
-                          <Image src={review.imageB64} thumbnail fluid style={{width:"300px"}} />
+                          <Image src={review.imageB64} thumbnail fluid style={{width:"500px"}} />
                           <Row>
                               <ListGroup>
                               {

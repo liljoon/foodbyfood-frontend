@@ -12,3 +12,9 @@ export const apiClientAi = axios.create(
 		baseURL:'http://localhost:8000'
 	}
 )
+
+export const apiClientSegmentation = axios.create(
+	{
+		baseURL:'http://localhost:8001'
+	}
+)

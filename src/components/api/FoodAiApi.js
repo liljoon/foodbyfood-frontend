@@ -1,4 +1,5 @@
-import {apiClientAi} from "./ApiClient";
+import {apiClientAi, apiClientSegmentation} from "./ApiClient";
+import axios from "axios";
 
 export function foodRecognition(formData) {
     return apiClientAi.post('/food_recognition', formData, {
@@ -7,4 +8,8 @@ export function foodRecognition(formData) {
             }
         }
     );
+}
+
+export function foodSegmentation(data) {
+    return apiClientSegmentation.post('/food_segmentation' , data);
 }
